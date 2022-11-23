@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="hospital_management_view_tree" model="ir.ui.view">
+        <field name="name">hospital.management.view.tree</field>
+        <field name="model">hospital.management</field>
+        <field name="arch" type="xml">
+
+            <tree>
+                <field name="patient_id"/>
+                <field name="patient_name_id"/>
+                <field name="dob"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="address"/>
+                <field name="mobile"/>
+                <field name="telephone"/>
+                <field name="blood_group"/>
+            </tree>
+
+        </field>
+    </record>
+
+
+    <record id="hospital_management_view_form" model="ir.ui.view">
+        <field name="name">hospital.management.view.form</field>
+        <field name="model">hospital.management</field>
+        <field name="arch" type="xml">
+
+            <form string="Hospital Management Form">
+                <sheet>
+                    <group>
+                        <field name="patient_id"/>
+                        <field name="patient_name_id"/>
+                        <field name="dob"/>
+                        <field name="age"/>
+                        <field name="gender"/>
+                        <field name="address"/>
+                        <field name="mobile"/>
+                        <field name="telephone"/>
+                        <field name="blood_group"/>
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+    </record>
+
+
+    <record id="hospital_management_action" model="ir.actions.act_window">
+        <field name="name">Home</field>
+        <field name="res_model">hospital.management</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="hospital_management_menu_root" name="Hospital Management">
+        <menuitem id="hospital_management_menu_patient_details" name="Patient Details">
+            <menuitem id="hospital_management_menu_patient_details_patient_card" name="Patient Card" action="hospital_management_action"/>
+        </menuitem>
+    </menuitem>
+
+</odoo>
+
+
+
+
