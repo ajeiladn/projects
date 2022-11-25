@@ -11,6 +11,9 @@
     'data': [
         'security/ir.model.access.csv',
         'views/hospital_management.xml',
+        'views/res_partner_views.xml',
+        'data/hospital_management_sequence.xml',
+        'view/hospital_management_op.xml',
     ],
     'installable': True,
     'application': True,

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <record id="hospital_management_op_view_tree" model="ir.ui.view">
+        <field name="name">hospital.management.op.view.tree</field>
+        <field name="model">hospital.management.op</field>
+        <field name="arch" type="xml">
+
+            <tree>
+                <field name="patient_sequence"/>
+                <field name="patient_id"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="blood_group"/>
+                <field name="doctor_id"/>
+                <field name="date"/>
+                <field name="token_no"/>
+                <field name="fee"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hospital_management_op_view_form" model="ir.ui.view">
+        <field name="name">hospital.management.op.view.form</field>
+        <field name="model">hospital.management.op</field>
+        <field name="arch" type="xml">
+
+            <form string="Hospital Management Op Form">
+                <sheet>
+                    <group>
+                        <field name="patient_sequence"/>
+                        <field name="patient_id"/>
+                        <field name="age"/>
+                        <field name="gender"/>
+                        <field name="blood_group"/>
+                        <field name="doctor_id"/>
+                        <field name="date"/>
+                        <field name="token_no"/>
+                        <field name="fee"/>
+                        <field name="state"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hospital_management_menu_op_action" model="ir.actions.act_window">
+        <field name="name">Home</field>
+        <field name="res_model">hospital.management.op</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="hospital_management_menu_op" name="OP" parent="hospital_management_menu_root" action="hospital_management_menu_op_action"/>
+
+</odoo>

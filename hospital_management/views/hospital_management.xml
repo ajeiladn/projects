@@ -7,12 +7,11 @@
         <field name="arch" type="xml">
 
             <tree>
+                <field name="patient_sequence"/>
                 <field name="patient_id"/>
-                <field name="patient_name_id"/>
                 <field name="dob"/>
                 <field name="age"/>
                 <field name="gender"/>
-                <field name="address"/>
                 <field name="mobile"/>
                 <field name="telephone"/>
                 <field name="blood_group"/>
@@ -30,37 +29,30 @@
             <form string="Hospital Management Form">
                 <sheet>
                     <group>
-                        <field name="patient_id"/>
-                        <field name="patient_name_id"/>
+                        <field name="patient_sequence"/>
+                        <field name="patient_id" widget="res_partner_many2one" context="{'show_address': 1}" options='{"always_reload": True}'/>
+<!--                        widget name (res_partner_many2one) is already created one from sale_order_views.xml -->
                         <field name="dob"/>
                         <field name="age"/>
                         <field name="gender"/>
-                        <field name="address"/>
                         <field name="mobile"/>
                         <field name="telephone"/>
                         <field name="blood_group"/>
                     </group>
                 </sheet>
             </form>
-
         </field>
     </record>
 
 
-    <record id="hospital_management_action" model="ir.actions.act_window">
+    <record id="hospital_management_menu_patient_card_action" model="ir.actions.act_window">
         <field name="name">Home</field>
         <field name="res_model">hospital.management</field>
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="hospital_management_menu_root" name="Hospital Management">
-        <menuitem id="hospital_management_menu_patient_details" name="Patient Details">
-            <menuitem id="hospital_management_menu_patient_details_patient_card" name="Patient Card" action="hospital_management_action"/>
-        </menuitem>
-    </menuitem>
+    <menuitem id="hospital_management_menu_root" name="Hospital Management"/>
+    <menuitem id="hospital_management_menu_patient_details" name="Patient Details" parent="hospital_management_menu_root"/>
+    <menuitem id="hospital_management_menu_patient_card" name="Patient Card" parent="hospital_management_menu_patient_details" action="hospital_management_menu_patient_card_action"/>
 
 </odoo>
-
-
-
-

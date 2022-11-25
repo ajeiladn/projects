@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="res_partner_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.view.form.inherit</field>
+
+        <field name="model">res.partner</field>
+<!--        res.partner is the model to display (in contacts)-->
+        <field name="inherit_id" ref="base.view_partner_form"/>
+<!--        ref is the external id of where to view in UI (debug->edit view form)-->
+
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='function']" position="before">
+<!--                field is which is already belongs in that UI , position means where to display (before/after) the field  in contacts, function is the field name of 'Job Position'-->
+
+                    <field name="d_o_b"/>
+                    <field name="gender"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

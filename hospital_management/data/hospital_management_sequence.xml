@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record id="hospital_management_sequence" model="ir.sequence">
+        <field name="name">Hospital Management Sequence</field>
+        <field name="code">hospital.sequence</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">PID</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>
