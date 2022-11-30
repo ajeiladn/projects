@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hospital_management_token" model="ir.sequence">
+        <field name="name">Hospital Management Token</field>
+        <field name="code">hospital.token</field>
+        <field name="active">TRUE</field>
+        <field name="prefix">TOK</field>
+        <field name="padding">3</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+<data>
+   <record id="ir_cron_token_recurring_action" model="ir.cron">
+       <field name="name">Recurring Token</field>
+       <field name="model_id" ref="model_hospital_management_op"/>
+       <field name="state">code</field>
+       <field name="code">model.token_reccuring()</field>
+       <field name="user_id" ref="base.user_root"/>
+       <field name="interval_number">1</field>
+
+       <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 12:00:00')" />
+
+       <field name="interval_type">days</field>
+       <field name="numbercall">-1</field>
+   </record>
+</data>
+
+</odoo>

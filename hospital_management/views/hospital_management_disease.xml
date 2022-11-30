@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <record id="hospital_management_disease_view_tree" model="ir.ui.view">
+        <field name="name">hospital.management.disease.view.tree</field>
+        <field name="model">hospital.management.disease</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" sample="1">
+                <field name="disease"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hospital_management_menu_disease_action" model="ir.actions.act_window">
+        <field name="name">Disease</field>
+        <field name="res_model">hospital.management.disease</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="hospital_management_menu_disease" name="Disease" parent="hospital_management_menu_root" action="hospital_management_menu_disease_action"/>
+</odoo>

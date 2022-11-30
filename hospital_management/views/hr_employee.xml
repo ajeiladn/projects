@@ -1,0 +1,54 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<odoo>-->
+<!--        <record id="hr_employee_view_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">hr.employee.view.form.inherit</field>>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='coach_id']" position="after">-->
+<!--                    <field name="is_doctor"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+<!--</odoo>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="utf-8" ?>-->
+<!--<odoo>-->
+
+<!--    <record id="res_partner_view_form_inherit" model="ir.ui.view">-->
+<!--        <field name="name">res.partner.view.form.inherit</field>-->
+
+<!--        <field name="model">res.partner</field>-->
+<!--&lt;!&ndash;        res.partner is the model to display (in contacts)&ndash;&gt;-->
+<!--        <field name="inherit_id" ref="base.view_partner_form"/>-->
+<!--&lt;!&ndash;        ref is the external id of where to view in UI (debug->edit view form)&ndash;&gt;-->
+
+<!--        <field name="arch" type="xml">-->
+
+<!--            <xpath expr="//field[@name='function']" position="before">-->
+<!--&lt;!&ndash;                field is which is already belongs in that UI , position means where to display (before/after) the field  in contacts, function is the field name of 'Job Position'&ndash;&gt;-->
+
+<!--                    <field name="d_o_b"/>-->
+<!--                    <field name="gender"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

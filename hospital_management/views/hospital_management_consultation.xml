@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <record id="hospital_management_consultation_view_tree" model="ir.ui.view">
+        <field name="name">hospital.management.consultation.view.tree</field>
+        <field name="model">hospital.management.consultation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="patient_id"/>
+                <field name="consultation_type"/>
+                <field name="doctor"/>
+                <field name="department"/>
+                <field name="date"/>
+                <field name="disease_id"/>
+                <field name="diagnose"/>
+                <field name="treatment"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hospital_management_consultation_view_form" model="ir.ui.view">
+        <field name="name">hospital.management.consultation.view.form</field>
+        <field name="model">hospital.management.consultation</field>
+        <field name="arch" type="xml">
+            <form string="Hospital Management Consultation Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="consultation_type"/>
+                            <field name="doctor"/>
+                            <field name="department"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="disease_id"/>
+                            <field name="diagnose"/>
+                        </group>
+                    </group>
+                </sheet>
+                <sheet>
+                    <group>
+                        <field name="treatment"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hospital_management_menu_consultation_action" model="ir.actions.act_window">
+        <field name="name">Consultation</field>
+        <field name="res_model">hospital.management.consultation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="hospital_management_menu_consultation" name="Consultation" parent="hospital_management_menu_root" action="hospital_management_menu_consultation_action"/>
+</odoo>

@@ -1,3 +1,6 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 
 access_hospital_management_userid,access_hospital_management_username,model_hospital_management,base.group_user,1,1,1,1
+access_hospital_management_op_userid,access_hospital_management_op_username,model_hospital_management_op,base.group_user,1,1,1,1
+access_hospital_management_consultant_userid,access_hospital_management_consultant_username,model_hospital_management_consultation,base.group_user,1,1,1,1
+access_hospital_management_disease_userid,access_hospital_management_disease_username,model_hospital_management_disease,base.group_user,1,1,1,1
