@@ -21,6 +21,7 @@
         'views/hospital_management_consultation.xml',
         'views/hospital_management_disease.xml',
         'views/hr_employee.xml',
+        'views/hospital_management_medicine.xml',
     ],
     'installable': True,
     'application': True,

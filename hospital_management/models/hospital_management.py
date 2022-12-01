@@ -1,6 +1,4 @@
 from odoo import fields, models, api, _
-
-from dateutil.relativedelta import relativedelta
 from datetime import date
 
 
@@ -14,7 +12,7 @@ class HospitalManagement(models.Model):
     # comodel is target model
     dob = fields.Date(string="D.o.b", related='patient_id.d_o_b', readonly=False)
     # patient_id is an object connects res.partner
-    age = fields.Integer(string="Age", readonly=True, compute="_compute_age")
+    age = fields.Integer(string="Age", readonly=True)
     # _compute_age is a standard fn name "_compute_<fieldname>"
     gender = fields.Selection(string="Gender", related='patient_id.gender', readonly=False)
     mobile = fields.Char(string="Mobile", related='patient_id.mobile', readonly=False)
@@ -24,6 +22,7 @@ class HospitalManagement(models.Model):
                    ('ab_pos', 'AB+'), ('ab_neg', 'AB-')],
         string="Blood Group",
     )
+    history_ids = fields.One2many('hospital.management.history', 'history_id', string='OP History')
 
     @api.model
     def create(self, vals):
@@ -32,11 +31,18 @@ class HospitalManagement(models.Model):
         result = super(HospitalManagement, self).create(vals)
         return result
 
-    @api.depends('dob')
-    def _compute_age(self):      # _ represents private method
-        for i in self:     # FOR loop because SELF may have multiple values "SINGLETON ERROR"
-            i.age = False   # compute doesn't work on empty fields so assign a false init
-            if i.dob:
-                d1 = i.dob
-                d2 = date.today()
-                i.age = relativedelta(d2, d1).years
+    @api.onchange('dob')
+    def calc_age(self):
+        if self.dob:
+            today = date.today()
+            self.age = today.year - self.dob.year
+
+
+class HospitalManagementHistory(models.Model):
+    _name = 'hospital.management.history'
+
+    date = fields.Char()
+    token = fields.Char()
+    doctor = fields.Char()
+    department = fields.Char()
+    history_id = fields.Many2one('hospital.management')

@@ -44,6 +44,18 @@
                             <field name="telephone"/>
                             <field name="blood_group"/>
                         </group>
+                        <notebook>
+                            <page string="History">
+                                <field name="history_ids">
+                                    <tree editable="bottom">
+                                        <field name="date"/>
+                                        <field name="token"/>
+                                        <field name="doctor"/>
+                                        <field name="department"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </group>
                 </sheet>
             </form>
@@ -52,13 +64,14 @@
 
 
     <record id="hospital_management_menu_patient_card_action" model="ir.actions.act_window">
-        <field name="name">Home</field>
+        <field name="name">Patient Card</field>
         <field name="res_model">hospital.management</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <menuitem id="hospital_management_menu_root" name="Hospital Management"/>
-    <menuitem id="hospital_management_menu_patient_details" name="Patient Details" parent="hospital_management_menu_root"/>
+    <menuitem id="hospital_management_menu_patient_details" name="Patient Details" parent="hospital_management_menu_root" sequence="1"/>
+    <menuitem id="hospital_management_menu_configurations" name="Configurations" parent="hospital_management_menu_root" sequence="4"/>
     <menuitem id="hospital_management_menu_patient_card" name="Patient Card" parent="hospital_management_menu_patient_details" action="hospital_management_menu_patient_card_action"/>
 
 </odoo>

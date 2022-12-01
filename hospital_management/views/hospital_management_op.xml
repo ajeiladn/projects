@@ -51,7 +51,6 @@
                             <field name="date"/>
                             <field name="currency_id" invisible="1"/>
 <!--                            currency doesn't need to show so invisible="1" -->
-
                             <field name="fee" widget="monetary"/>
                         </group>
                     </group>
@@ -66,6 +65,6 @@
         <field name="view_mode">kanban,tree,form</field>
     </record>
 
-    <menuitem id="hospital_management_menu_op" name="OP" parent="hospital_management_menu_root" action="hospital_management_menu_op_action"/>
+    <menuitem id="hospital_management_menu_op" name="OP" parent="hospital_management_menu_root" action="hospital_management_menu_op_action" sequence="2"/>
 
 </odoo>

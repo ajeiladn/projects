@@ -14,4 +14,17 @@ class HospitalManagementConsultation(models.Model):
     date = fields.Date(default=datetime.today(), string='Date')
     disease_id = fields.Many2one('hospital.management.disease', string='Disease', required=True)
     diagnose = fields.Text(string='Diagnose')
-    treatment = fields.Char()
+    treatment_ids = fields.One2many('hospital.management.treatment', 'treatment_id', string='Treatment')
+
+
+class HospitalManagementTreatment(models.Model):
+    _name = 'hospital.management.treatment'
+    _description = 'descriptions'
+
+    medicine_id = fields.Many2one('hospital.management.medicine', string='Medicine')
+    dose = fields.Char(string='Dose')
+    days = fields.Integer(string='Days')
+    description = fields.Text(string='Description')
+    treatment_id = fields.Many2one('hospital.management.consultation', select=False, invisible=True)
+    # treatment_id is an imaginary field to create inverse
+

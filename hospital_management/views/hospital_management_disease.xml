@@ -6,7 +6,7 @@
         <field name="name">hospital.management.disease.view.tree</field>
         <field name="model">hospital.management.disease</field>
         <field name="arch" type="xml">
-            <tree editable="bottom" sample="1">
+            <tree editable="bottom">
                 <field name="disease"/>
             </tree>
         </field>
@@ -18,5 +18,5 @@
         <field name="view_mode">tree</field>
     </record>
 
-    <menuitem id="hospital_management_menu_disease" name="Disease" parent="hospital_management_menu_root" action="hospital_management_menu_disease_action"/>
+    <menuitem id="hospital_management_menu_disease" name="Disease" parent="hospital_management_menu_configurations" action="hospital_management_menu_disease_action"/>
 </odoo>
