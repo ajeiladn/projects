@@ -9,9 +9,6 @@ class HrEmployee(models.Model):
     @api.onchange('is_doctor')
     def doctor(self):
         if self.is_doctor:
-            pass
-            # print("hello world")
-            # print("self.job_id---------------", self.job_id)
-            # print("self.job_id.id------------", self.job_id.id)
-            # print("self.job_id.id.name-------", self.job_id.id)
-            # self.write({'job_id': "Doctor"})
+            doctor_id = self.env.ref('hospital_management.hr_job_doctor')
+            # ref contains external id i.e, <modulename>_<record_id>  record id from demo.xml
+            self.write({'job_id': doctor_id})

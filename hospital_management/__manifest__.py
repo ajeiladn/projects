@@ -14,6 +14,7 @@
 
         'data/hospital_management_sequence.xml',
         'data/hospital_management_token.xml',
+        'data/demo.xml',
 
         'views/hospital_management.xml',
         'views/res_partner_views.xml',

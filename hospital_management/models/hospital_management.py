@@ -13,7 +13,6 @@ class HospitalManagement(models.Model):
     dob = fields.Date(string="D.o.b", related='patient_id.d_o_b', readonly=False)
     # patient_id is an object connects res.partner
     age = fields.Integer(string="Age", readonly=True)
-    # _compute_age is a standard fn name "_compute_<fieldname>"
     gender = fields.Selection(string="Gender", related='patient_id.gender', readonly=False)
     mobile = fields.Char(string="Mobile", related='patient_id.mobile', readonly=False)
     telephone = fields.Char(string="Telephone", related='patient_id.phone', readonly=False)
@@ -46,3 +45,5 @@ class HospitalManagementHistory(models.Model):
     doctor = fields.Char()
     department = fields.Char()
     history_id = fields.Many2one('hospital.management')
+
+    # using .create() give data to history fields
