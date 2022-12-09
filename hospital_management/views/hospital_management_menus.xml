@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<odoo>
+    <menuitem id="hospital_management_menu_root" name="Hospital Management"/>
+    <menuitem id="hospital_management_menu_patient_details" name="Patient Details" parent="hospital_management_menu_root" sequence="1"/>
+    <menuitem id="hospital_management_menu_configurations" name="Configurations" parent="hospital_management_menu_root" sequence="5"/>
+    <menuitem id="hospital_management_menu_patient_card" name="Patient Card" parent="hospital_management_menu_patient_details" action="hospital_management_menu_patient_card_action"/>
+
+    <menuitem id="hospital_management_menu_op" name="OP" parent="hospital_management_menu_root" action="hospital_management_menu_op_action" sequence="2"/>
+
+    <menuitem id="hospital_management_menu_consultation" name="Consultation" parent="hospital_management_menu_root" action="hospital_management_menu_consultation_action" sequence="4"/>
+
+    <menuitem id="hospital_management_menu_disease" name="Disease" parent="hospital_management_menu_configurations" action="hospital_management_menu_disease_action"/>
+
+    <menuitem id="hospital_management_menu_medicine" name="Medicine" parent="hospital_management_menu_configurations" action="hospital_management_menu_medicine_action"/>
+
+    <menuitem id="hospital_management_menu_appointment" name="Appointment" parent="hospital_management_menu_root" action="hospital_management_menu_appointment_action" sequence="3"/>
+
+</odoo>

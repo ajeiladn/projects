@@ -9,7 +9,7 @@
             <tree>
                 <field name="patient_sequence"/>
                 <field name="patient_id"/>
-                <field name="dob"/>
+                <field name="dob" force_save="1"/>
                 <field name="age"/>
                 <field name="gender"/>
                 <field name="mobile"/>
@@ -36,7 +36,7 @@
                             <field name="patient_id" widget="res_partner_many2one" context="{'show_address': 1}" options='{"always_reload": True}'/>
     <!--                        widget name (res_partner_many2one) is already created one from sale_order_views.xml -->
                             <field name="dob"/>
-                            <field name="age"/>
+                            <field name="age" force_save="1"/>
                         </group>
                         <group>
                             <field name="gender"/>
@@ -62,16 +62,27 @@
         </field>
     </record>
 
+    <record id="hospital_management_search" model="ir.ui.view">
+        <field name="name">hospital.management.search</field>
+        <field name="model">hospital.management</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="patient_id"/>
+                <filter string="Male" name="gender" domain="[('gender', '=', 'male')]" />
+                <filter string="Female" name="gender" domain="[('gender', '=', 'female')]" />
+
+                <group expand="0" string="Group By">
+                    <filter string="Age" name="age" context="{'group_by': 'age'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
 
     <record id="hospital_management_menu_patient_card_action" model="ir.actions.act_window">
         <field name="name">Patient Card</field>
         <field name="res_model">hospital.management</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <menuitem id="hospital_management_menu_root" name="Hospital Management"/>
-    <menuitem id="hospital_management_menu_patient_details" name="Patient Details" parent="hospital_management_menu_root" sequence="1"/>
-    <menuitem id="hospital_management_menu_configurations" name="Configurations" parent="hospital_management_menu_root" sequence="4"/>
-    <menuitem id="hospital_management_menu_patient_card" name="Patient Card" parent="hospital_management_menu_patient_details" action="hospital_management_menu_patient_card_action"/>
 
 </odoo>

@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import fields, models
 from datetime import datetime
 
 
@@ -7,36 +7,38 @@ class HospitalManagementConsultation(models.Model):
     _description = 'hospital management consultation'
     _rec_name = 'consultation_type'
 
-    patient_id = fields.Many2one('hospital.management', string='Patient Card', required=True)
+    token_id = fields.Many2one('hospital.management.op', string='Token', required=True,
+                               domain=[('date', '=', datetime.today())])
+    card_id = fields.Many2one(related='token_id.card_id', string='Patient Card', readonly=False)
     consultation_type = fields.Selection(selection=[('op', 'OP'), ('ip', 'IP')], string='Consultation', required=True)
-    doctor = fields.Many2one('hr.employee', string='Doctor', domain=[('is_doctor', '=', True)])
-    department = fields.Many2one(string='Department', related='doctor.department_id')
-
-    date = fields.Date(default=datetime.today(), string='Date')
-    disease_ids = fields.Many2many('hospital.management.disease', 'diseases_rel',  string='Disease', required=True)
-    # disease_rel is the table name we provide
+    doctor_id = fields.Many2one(related='token_id.doctor_id', string='Doctor', store=True, readonly=True)
+    department_id = fields.Many2one(string='Department', related='token_id.department_id', store=True, readonly=True)
+    date = fields.Date(string='Date', default=datetime.today())
+    disease_ids = fields.Many2many('hospital.management.disease', 'diseases_rel', string='Disease', required=True)
+    # disease_rel is the table name we provide attr of Many2many
     diagnose = fields.Text(string='Diagnose')
     treatment_ids = fields.One2many('hospital.management.treatment', 'treatment_id', string='Treatment')
+    is_save = fields.Boolean(default=False)
 
-    @api.model
-    def create(self, vals):
-        result = super(HospitalManagementConsultation, self).create(vals)
-
-
-
-        # access all files here from consultation
-        # goto hospital mgmt
-
-        return result
+    def confirm(self):
+        self.env['hospital.management.history'].create({
+            'date': self.date,
+            'token': self.token_id.token_no,
+            'doctor': self.doctor_id.name,
+            'department': self.department_id.name,
+            'history_id': self.card_id.id
+            })
+        self.is_save = True
 
 
 class HospitalManagementTreatment(models.Model):
     _name = 'hospital.management.treatment'
     _description = 'descriptions'
 
-    medicine_id = fields.Many2one('hospital.management.medicine', string='Medicine')
+    medicine_id = fields.Many2one('hospital.management.medicine', string='Medicine', required=True)
     dose = fields.Char(string='Dose')
     days = fields.Integer(string='Days')
     description = fields.Text(string='Description')
     treatment_id = fields.Many2one('hospital.management.consultation', select=False, invisible=True)
+
     # treatment_id is an imaginary field for create inverse

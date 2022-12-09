@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="hospital_management_appointment_view_tree" model="ir.ui.view">
+        <field name="name">hospital.management.appointment.view.tree</field>
+        <field name="model">hospital.management.appointment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="token_no"/>
+                <field name="card_id"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="department_id"/>
+                <field name="fee"/>
+                <field name="date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hospital_management_appointment_view_form" model="ir.ui.view">
+        <field name="name">hospital.management.appointment.view.form</field>
+        <field name="model">hospital.management.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Hospital Management Appointment">
+                <header>
+                    <button name="action_appointment" string="Confirm" type="object" states="draft" class="oe_highlight"/>
+                    <button name="action_op" string="Convert to OP" type="object" states="appointment" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible='draft, appointment, op'/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="token_no"/>
+                    </h1>
+
+                    <div name="button_box" position="inside">
+                        <button class="oe_stat_button" type="object" name="appointment_tab" icon="fa-gittip"
+                                attrs="{'invisible':[('state', '!=', 'op')]}" string="Appointments"/>
+<!--                            <field string="Appointments" name="appoint" widget="statinfo"/>-->
+<!--                        </button>-->
+                    </div>
+
+                    <group>
+                        <field name="card_id"/>
+                        <field name="patient_id"/>
+                        <field name="doctor_id"/>
+                        <field name="department_id"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="fee" widget="monetary"/>
+                        <field name="date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hospital_management_menu_appointment_action" model="ir.actions.act_window">
+        <field name="name">Appointment</field>
+        <field name="res_model">hospital.management.appointment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

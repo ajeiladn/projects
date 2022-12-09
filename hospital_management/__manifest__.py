@@ -14,7 +14,8 @@
 
         'data/hospital_management_sequence.xml',
         'data/hospital_management_token.xml',
-        'data/demo.xml',
+        'data/job_position_demo.xml',
+        'data/product_demo.xml',
 
         'views/hospital_management.xml',
         'views/res_partner_views.xml',
@@ -23,6 +24,9 @@
         'views/hospital_management_disease.xml',
         'views/hr_employee.xml',
         'views/hospital_management_medicine.xml',
+        'views/hospital_management_appointment.xml',
+
+        'views/hospital_management_menus.xml',
     ],
     'installable': True,
     'application': True,

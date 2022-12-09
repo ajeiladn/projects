@@ -9,6 +9,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='coach_id']" position="after">
                     <field name="is_doctor"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="fee" widget="monetary" attrs="{'invisible':[('is_doctor', '!=', True)]}"/>
             </xpath>
         </field>
     </record>

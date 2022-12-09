@@ -5,17 +5,15 @@ from datetime import date
 class HospitalManagement(models.Model):
     _name = 'hospital.management'
     _description = 'hospital management'
-    _rec_name = 'patient_sequence'  # for identify the object name coz we didn't give the name field
+    _rec_name = 'patient_sequence'
 
     patient_sequence = fields.Char(readonly=True, copy=False, default=lambda self: _('New'))
-    patient_id = fields.Many2one(comodel_name='res.partner', string='Patient Name')
-    # comodel is target model
-    dob = fields.Date(string="D.o.b", related='patient_id.d_o_b', readonly=False)
-    # patient_id is an object connects res.partner
-    age = fields.Integer(string="Age", readonly=True)
-    gender = fields.Selection(string="Gender", related='patient_id.gender', readonly=False)
-    mobile = fields.Char(string="Mobile", related='patient_id.mobile', readonly=False)
-    telephone = fields.Char(string="Telephone", related='patient_id.phone', readonly=False)
+    patient_id = fields.Many2one('res.partner', string='Patient Name')
+    dob = fields.Date(string="D.o.b", related='patient_id.d_o_b', readonly=True)
+    age = fields.Integer(string="Age", readonly=True, store=True)
+    gender = fields.Selection(string="Gender", related='patient_id.gender', readonly=True)
+    mobile = fields.Char(string="Mobile", related='patient_id.mobile', readonly=True)
+    telephone = fields.Char(string="Telephone", related='patient_id.phone', readonly=True)
     blood_group = fields.Selection(
         selection=[('a_pos', 'A+'), ('a_neg', 'A-'), ('b_pos', 'B+'), ('b_neg', 'B-'), ('o_pos', 'O+'), ('o_neg', 'O-'),
                    ('ab_pos', 'AB+'), ('ab_neg', 'AB-')],
@@ -45,5 +43,3 @@ class HospitalManagementHistory(models.Model):
     doctor = fields.Char()
     department = fields.Char()
     history_id = fields.Many2one('hospital.management')
-
-    # using .create() give data to history fields
