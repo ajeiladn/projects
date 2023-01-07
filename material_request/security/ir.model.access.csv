@@ -1,0 +1,9 @@
+id,name,model_id/id,group_id/id,perm_read,perm_create,perm_write,perm_unlink
+
+access_material_request_userid,access_material_request_username,model_material_request,material_request.user_group,1,1,1,1
+access_material_request_managerid,access_material_request_managername,model_material_request,material_request.manager_group,1,0,0,0
+access_material_request_headid,access_material_request_headname,model_material_request,material_request.head_group,1,0,1,0
+
+access_request_lines_userid,access_request_lines_username,model_request_lines,material_request.user_group,1,1,1,1
+access_request_lines_managerid,access_request_lines_managername,model_request_lines,material_request.manager_group,1,0,0,0
+access_request_lines_headid,access_request_lines_headname,model_request_lines,material_request.head_group,1,0,0,0

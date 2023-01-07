@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_template_inherit" model="ir.ui.view">
+        <field name="name">product.template.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//header//button[@name='action_open_label_layout']" position="after">
+                <button name="action_automated_po" string="Automated PO" type="object" action="product_template_wizard_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

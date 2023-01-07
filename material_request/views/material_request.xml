@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="material_request_view_tree" model="ir.ui.view">
+        <field name="name">material.request.view.tree</field>
+        <field name="model">material.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="is_po" invisible="1"/>
+                <field name="is_internal" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="material_request_view_form" model="ir.ui.view">
+        <field name="name">material.request.view.form</field>
+        <field name="model">material.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit" string="Submit" type="object" states="to_submit" class="oe_highlight" groups="material_request.user_group"/>
+                    <button name="action_verify" string="Verify" type="object" states="submitted" class="oe_highlight" groups="material_request.manager_group"/>
+                    <button name="action_approve" string="Approve" type="object" states="verified" class="oe_highlight" groups="material_request.head_group"/>
+                    <button name="action_refuse" string="Refuse" type="object" states="verified" groups="material_request.head_group"/>
+                    <field name="state" widget="statusbar" statusbar_visible="to_submit, submitted, verified, approved, refused"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="sequence"/>
+                    </h1>
+                    <field name="is_po" invisible="1"/>
+                    <field name="is_internal" invisible="1"/>
+                    <div name="button_box" position="inside">
+                        <button class="oe_stat_button" type="object" name="po_tab" string="PO"
+                                icon="fa-briefcase" attrs="{'invisible':[('is_po','!=',True)]}"/>
+                        <button class="oe_stat_button" type="object" name="internal_tab" string="Internal Transfer"
+                                icon="fa-building" attrs="{'invisible':[('is_internal','!=',True)]}"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                        <notebook>
+                            <page string="Request">
+                                <field name="request_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="product_qty"/>
+                                        <field name="product_transfer"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="material_request_action" model="ir.actions.act_window">
+        <field name="name">Material Request</field>
+        <field name="res_model">material.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
