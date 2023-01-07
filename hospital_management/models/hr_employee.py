@@ -11,10 +11,11 @@ class HrEmployee(models.Model):
                                   related='company_id.currency_id',
                                   default=lambda self: self.env.user.company_id.currency_id.id, readonly=True)
     fee = fields.Monetary(string='Fee', store=True)
+    op_count = fields.Integer(string="OP count", default=1)
 
     @api.onchange('is_doctor')
     def doctor(self):
         if self.is_doctor:
             doctor_id = self.env.ref('hospital_management.hr_job_doctor')
-            # ref contains external id i.e, <modulename>_<record_id>  record id from job_position_demo.xml
+            # ref contains external id i.e, <modulename>.<record_id>  record id from job_position_demo.xml
             self.write({'job_id': doctor_id})

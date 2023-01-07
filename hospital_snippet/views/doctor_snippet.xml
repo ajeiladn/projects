@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="top4_doctors_snippet" name="Top4 Doctors">
+        <section class="container top4_doctors">
+            <div class="row" id="div1">
+                <h1 style="text-align:center;font-weight: bold;font-size:25px;">TOP4 DOCTORS</h1>
+                <div class="carousal" id="doctors">
+
+                </div>
+
+<!--                <div class="card-group">-->
+<!--                    <t t-foreach="top4" t-as="top">-->
+<!--                        <div class="card">-->
+<!--                            <a t-attf-href="/doctor/#{top.id}">-->
+<!--                            <img t-attf-src="data:image/png;base64,{{top.image_1920}}"-->
+<!--                                 class="img-thumbnail" style="height:250px;width:250px;"/>-->
+<!--                                <span t-esc="top.name"/>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </t>-->
+<!--                </div>-->
+
+            </div>
+        </section>
+    </template>
+
+    <template id="doctor_template" name="Doctor">
+        <t t-call="website.layout">
+            <div class="card">
+                <h1 style="text-align:center;font-weight: bold;font-size:25px;">
+                    <span t-field="doctor.name"/>
+                </h1>
+                <center>
+                    <div>
+                        <span t-field="doctor.image_1920" t-options="{'widget': 'image'}"
+                              style="height:100px;width:100px;"/>
+                        <div>
+                            <span style="font-weight: bold;">Dept:</span>
+                            <span t-field="doctor.department_id"/>
+                        </div>
+                        <div>
+                            <span style="font-weight: bold;">Email:</span>
+                            <span t-field="doctor.work_email"/>
+                        </div>
+                        <div>
+                            <span style="font-weight: bold;">Phone:</span>
+                            <span t-field="doctor.work_phone"/>
+
+                        </div>
+                        <div>
+                            <span style="font-weight: bold;">Fee:</span>
+                            <span t-field="doctor.fee"/>
+                        </div>
+                    </div>
+                </center>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="inherit_top4_doctors_snippet" inherit_id="website.snippets" priority="8">
+        <xpath expr="//div[@id='snippet_effect']//t[@t-snippet][last()]" position="after">
+            <t t-snippet="hospital_snippet.top4_doctors_snippet"/>
+        </xpath>
+    </template>
+
+</odoo>

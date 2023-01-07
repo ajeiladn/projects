@@ -6,7 +6,7 @@
         <field name="model">hospital.management.appointment</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="token_no"/>
+                <field name="sequence_no"/>
                 <field name="card_id"/>
                 <field name="patient_id"/>
                 <field name="doctor_id"/>
@@ -14,6 +14,7 @@
                 <field name="fee"/>
                 <field name="date"/>
                 <field name="state"/>
+                <field name="token_no"/>
             </tree>
         </field>
     </record>
@@ -29,15 +30,14 @@
                     <field name="state" widget="statusbar" statusbar_visible='draft, appointment, op'/>
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" text="Paid" attrs="{'invisible':[('state','!=','paid')]}"/>
                     <h1>
-                        <field name="token_no"/>
+                        <field name="sequence_no"/>
                     </h1>
 
                     <div name="button_box" position="inside">
                         <button class="oe_stat_button" type="object" name="appointment_tab" icon="fa-gittip"
                                 attrs="{'invisible':[('state', '!=', 'op')]}" string="Appointments"/>
-<!--                            <field string="Appointments" name="appoint" widget="statinfo"/>-->
-<!--                        </button>-->
                     </div>
 
                     <group>
@@ -48,9 +48,28 @@
                         <field name="currency_id" invisible="1"/>
                         <field name="fee" widget="monetary"/>
                         <field name="date"/>
+                        <field name="token_no"/>
                     </group>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="hospital_management_appointment_search" model="ir.ui.view">
+        <field name="name">hospital.management.appointment.search</field>
+        <field name="model">hospital.management.appointment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sequence_no"/>
+
+                <filter string="Appointment" name="state" domain="[('state','=','appointment')]"/>
+                <filter string="Op" name="state" domain="[('state','=','op')]"/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Doctor" name="doctor_id" context="{'group_by':'doctor_id'}"/>
+                    <filter string="Card Id" name="card_id" context="{'group_by':'card_id'}"/>
+                </group>
+            </search>
         </field>
     </record>
 

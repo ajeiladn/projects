@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
 
             <tree>
-                <field name="patient_sequence"/>
+                <field name="patient_sequence" force_save="1"/>
                 <field name="patient_id"/>
                 <field name="dob" force_save="1"/>
                 <field name="age"/>
@@ -29,7 +29,7 @@
             <form string="Hospital Management Form">
                 <sheet>
                     <h1>
-                        <field name="patient_sequence"/>
+                        <field name="patient_sequence" force_save="1"/>
                     </h1>
                     <group>
                         <group>
@@ -49,7 +49,7 @@
                                 <field name="history_ids">
                                     <tree editable="bottom">
                                         <field name="date"/>
-                                        <field name="token"/>
+                                        <field name="token_no"/>
                                         <field name="doctor"/>
                                         <field name="department"/>
                                     </tree>

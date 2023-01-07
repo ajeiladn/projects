@@ -6,3 +6,4 @@ class ResPartner(models.Model):
 
     d_o_b = fields.Date(string="D.o.b")
     gender = fields.Selection(selection=[('male', "Male"), ('female', "Female")], string="Gender")
+    is_op_created = fields.Boolean(default=False)

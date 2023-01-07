@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="template_patient_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div>
+                        <center>
+                            <h1 style="font-weight: bold;font-size:40px;text-align: center;">Medical Report</h1>
+                            <t t-foreach="vals" t-as="val">
+                                <div>
+                                    <t t-esc="val['patient_sequence']"/>
+                                    <t t-esc="patient_id"/>
+                                </div>
+                            </t>
+                        </center>
+                    </div>
+                    <div>
+                        <t t-if="doctor_id">
+                            <strong>
+                                <span>Doctor:</span>
+                            </strong>
+                            <t t-esc="doctor_id"/>
+                        </t>
+                    </div>
+                    <div>
+                        <t t-if="from_date">
+                            <strong>
+                                <span>From:</span>
+                            </strong>
+                            <t t-esc="from_date"/>
+                        </t>
+                        <t t-if="to_date">
+                            <strong>
+                                <span>To:</span>
+                            </strong>
+                            <t t-esc="to_date"/>
+                        </t>
+                    </div>
+
+
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                            <th name="th_slno" class="text-center">SL No.</th>
+                            <th name="th_op" class="text-center">OP</th>
+                            <th name="th_patient_name" class="text-center">Patient Name</th>
+                            <th name="th_date" class="text-center">Date</th>
+                            <th name="th_doctor" class="text-center">Doctor</th>
+                            <th name="th_dept" class="text-center">Dept</th>
+                            <th name="th_disease" class="text-center">Disease</th>
+                        </thead>
+
+
+                        <tbody>
+                            <t t-foreach="vals" t-as="line">
+                                <tr>
+                                    <td>
+                                        <span t-esc="line_index +1"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['token_no']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['patient']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['date']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['doctor']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['dept']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line['disease']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

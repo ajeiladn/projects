@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
 
             <tree>
-                <field name="token_no"/>
+                <field name="sequence_no"/>
                 <field name="card_id"/>
                 <field name="patient_id"/>
                 <field name="age"/>
@@ -17,6 +17,7 @@
                 <field name="date"/>
                 <field name="fee"/>
                 <field name="state"/>
+                <field name="token_no"/>
             </tree>
 
         </field>
@@ -32,11 +33,12 @@
                 <header>
                     <button name="action_confirm" states="draft" string="Confirm" type="object" class="oe_highlight"/>
                     <button name="action_fee_payment" states="op" string="Fee Payment" type="object" class="oe_highlight"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,op"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,op,paid"/>
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" text="Paid" attrs="{'invisible':[('state','!=','paid')]}"/>
                     <h1>
-                        <field name="token_no"/>
+                        <field name="sequence_no"/>
                     </h1>
                     <group>
                         <group>
@@ -51,6 +53,7 @@
                             <field name="date"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="fee" widget="monetary"/>
+                            <field name="token_no"/>
                         </group>
                     </group>
                 </sheet>
@@ -58,9 +61,26 @@
         </field>
     </record>
 
+    <record id="hospital_management_op_search" model="ir.ui.view">
+        <field name="name">hospital.management.op.search</field>
+        <field name="model">hospital.management.op</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sequence_no"/>
+
+                <filter string="Draft" name="state" domain="[('state','=','draft')]"/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Doctor" name="doctor_id" context="{'group_by':'doctor_id'}"/>
+                    <filter string="Card Id" name="card_id" context="{'group_by':'card_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="hospital_management_menu_op_action" model="ir.actions.act_window">
         <field name="name">OP</field>
         <field name="res_model">hospital.management.op</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">tree,form</field>
     </record>
 </odoo>

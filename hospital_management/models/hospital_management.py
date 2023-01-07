@@ -7,7 +7,7 @@ class HospitalManagement(models.Model):
     _description = 'hospital management'
     _rec_name = 'patient_sequence'
 
-    patient_sequence = fields.Char(readonly=True, copy=False, default=lambda self: _('New'))
+    patient_sequence = fields.Char(readonly=True, copy=False, store=True, default=lambda self: _('New'))
     patient_id = fields.Many2one('res.partner', string='Patient Name')
     dob = fields.Date(string="D.o.b", related='patient_id.d_o_b', readonly=True)
     age = fields.Integer(string="Age", readonly=True, store=True)
@@ -38,8 +38,8 @@ class HospitalManagement(models.Model):
 class HospitalManagementHistory(models.Model):
     _name = 'hospital.management.history'
 
-    date = fields.Char()
-    token = fields.Char()
-    doctor = fields.Char()
-    department = fields.Char()
+    date = fields.Char(string="Date")
+    token_no = fields.Char(string="Token")
+    doctor = fields.Char(string="Doctor")
+    department = fields.Char(string="Department")
     history_id = fields.Many2one('hospital.management')

@@ -7,15 +7,18 @@ class HospitalManagementConsultation(models.Model):
     _description = 'hospital management consultation'
     _rec_name = 'consultation_type'
 
-    token_id = fields.Many2one('hospital.management.op', string='Token', required=True,
+    token_no = fields.Many2one('hospital.management.op', string='Token', required=True,
                                domain=[('date', '=', datetime.today())])
-    card_id = fields.Many2one(related='token_id.card_id', string='Patient Card', readonly=False)
+    card_id = fields.Many2one(related='token_no.card_id', string='Patient Card', store=True)
     consultation_type = fields.Selection(selection=[('op', 'OP'), ('ip', 'IP')], string='Consultation', required=True)
-    doctor_id = fields.Many2one(related='token_id.doctor_id', string='Doctor', store=True, readonly=True)
-    department_id = fields.Many2one(string='Department', related='token_id.department_id', store=True, readonly=True)
+    doctor_id = fields.Many2one(related='token_no.doctor_id', string='Doctor', store=True, readonly=True)
+    department_id = fields.Many2one(string='Department', related='token_no.department_id', store=True, readonly=True)
     date = fields.Date(string='Date', default=datetime.today())
-    disease_ids = fields.Many2many('hospital.management.disease', 'diseases_rel', string='Disease', required=True)
+    disease_id = fields.Many2one('hospital.management.disease', string='Disease', required=True, store=True)
+
+    # disease_ids = fields.Many2many('hospital.management.disease', 'diseases_rel', string='Disease', required=True, store=True)
     # disease_rel is the table name we provide attr of Many2many
+
     diagnose = fields.Text(string='Diagnose')
     treatment_ids = fields.One2many('hospital.management.treatment', 'treatment_id', string='Treatment')
     is_save = fields.Boolean(default=False)
@@ -23,7 +26,7 @@ class HospitalManagementConsultation(models.Model):
     def confirm(self):
         self.env['hospital.management.history'].create({
             'date': self.date,
-            'token': self.token_id.token_no,
+            'token_no': self.token_no.token_no,
             'doctor': self.doctor_id.name,
             'department': self.department_id.name,
             'history_id': self.card_id.id

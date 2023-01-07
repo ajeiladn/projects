@@ -6,5 +6,3 @@ from . import hospital_management_disease
 from . import hr_employee
 from . import hospital_management_medicine
 from . import hospital_management_appointment
-
-

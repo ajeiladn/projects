@@ -7,9 +7,9 @@ class HospitalManagementOp(models.Model):
     _description = 'op tickets'
     _rec_name = 'token_no'
 
-    token_no = fields.Char(readonly=True, default=lambda self: _('New'))
+    sequence_no = fields.Char(readonly=True, copy=False, default=lambda self: _('New'))
     card_id = fields.Many2one('hospital.management', string='Card Id', required=True)
-    patient_id = fields.Many2one(string='Patient Name', related='card_id.patient_id', readonly=True)  # true
+    patient_id = fields.Many2one(string='Patient Name', related='card_id.patient_id', readonly=True)
     age = fields.Integer(related='card_id.age', string='Age', readonly=True)
     gender = fields.Selection(related='card_id.gender', string='Gender', readonly=True)
     blood_group = fields.Selection(related='card_id.blood_group', string='Blood Group', readonly=True)
@@ -25,30 +25,55 @@ class HospitalManagementOp(models.Model):
     fee = fields.Monetary(string='Fee', related='doctor_id.fee', readonly=True)
     state = fields.Selection(selection=[('draft', 'Draft'), ('op', 'OP'), ('paid', 'Paid')],
                              string='State', default='draft')
+    # invoice_ids = fields.Many2many('account.move', string="Invoices")
+    token_no = fields.Char(string='Token', readonly=True)
 
     @api.model
     def create(self, vals):
-        if vals.get('token_no', _('New')) == _('New'):
-            vals['token_no'] = self.env['ir.sequence'].next_by_code('hospital.token') or _('New')
+        if vals.get('sequence_no', _('New')) == _('New'):
+            vals['sequence_no'] = self.env['ir.sequence'].next_by_code('hospital.sequence.op') or _('New')
         res = super(HospitalManagementOp, self).create(vals)
         return res
 
-    def token_reccuring(self):
-        token = self.env['ir.sequence'].search([('name', '=like', 'Hospital Management Token')])
-        token.write({
-            'number_next_actual': 1,
-        })
-
     def action_confirm(self):
         self.write({'state': "op"})
+        self.patient_id.is_op_created = True
+
+        doc = self.env['hr.employee'].browse(self.doctor_id.id)
+        doc.op_count += 1
+
+        token = self.env['hospital.management.appointment'].search_count([('date', '=', self.date),
+                                                                          ('doctor_id', '=', self.doctor_id.id)])
+        token += 1
+        self.token_no = token
+
+        # token = self.search_count([('date', '=', self.date), ('doctor_id', '=', self.doctor_id.id)])
+        #
+        # appointment_token = self.env['hospital.management.appointment'].search(
+        #     [('date', '=', self.date), ('doctor_id', '=', self.doctor_id.id)], limit=1,  order='id desc')
+        #
+        # appointment_token = int(appointment_token)
+        #
+        # if token == appointment_token:
+        #     self.token_no = token + 1
+        #
+        # elif token > appointment_token:
+        #     self.token_no = token
+        #
+        # elif token < appointment_token:
+        #     self.token_no = appointment_token
+        #
+        # else:
+        #     self.token_no = appointment_token
+
 
     def action_fee_payment(self):
         vals = self.env['account.move'].create({
             'move_type': 'out_invoice',
-            # 'journal_id': journal.id,
             'partner_id': self.patient_id.id,
             'invoice_date': self.date,
             'date': self.date,
+            'ref': self.sequence_no,
             'invoice_line_ids': [(0, 0, {
                 'product_id': self.env.ref('hospital_management.product_template_product').id,
                 # inside ref is <modulename>.<record_id>
@@ -59,6 +84,9 @@ class HospitalManagementOp(models.Model):
             })]
         })
 
+        # self.write({'invoice_ids': [(4, vals.id)]})
+        # here pass the vals id to that many2one field
+
         return {
             'type': 'ir.actions.act_window',
             'name': 'Fee',
@@ -67,3 +95,15 @@ class HospitalManagementOp(models.Model):
             'view_id': self.env.ref('account.view_move_form').id,
             'res_id': vals.id,
         }
+
+
+class AccountMove(models.Model):
+    _inherit = 'account.move'
+
+    @api.constrains('payment_state')
+    def constrains_payment_state(self):
+        for i in self:
+            if i.payment_state == 'paid':
+                ref = i.env['hospital.management.op'].search([('sequence_no', '=', i.ref)])
+                # ref = i.env['hospital.management.op'].search([('invoice_ids', '=', i.self.id)])
+                ref.write({'state': "paid"})
