@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_certificate_id,access_certificate_name,model_certificate_certificate,,1,1,1,1
+access_certificate_course_id,access_certificate_course_name,model_certificate_course,,1,1,1,1
+access_certificate_partner_id,access_certificate_partner_name,model_certificate_partner,,1,1,1,1

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="certificate_report_action" model="ir.actions.report">
+        <field name="name">Certificate Report</field>
+        <field name="model">certificate.certificate</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">certificate.certificate_report_template</field>
+        <field name="report_file">certificate.certificate_report_template</field>
+        <field name="binding_model_id" ref="model_certificate_certificate"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

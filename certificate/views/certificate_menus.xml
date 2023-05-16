@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="certificate_root" name="Cerificate Verification" sequence="-99"/>
+    <menuitem id="certificates_menu"
+              name="Cerificates"
+              parent="certificate_root"
+              sequence="1"
+              action="certificate.certificates_menu_action"/>
+    <menuitem id="courses_menu"
+              name="Courses"
+              parent="certificate_root"
+              sequence="2"
+              action="certificate.certificate_course_menu_action"/>
+    <menuitem id="partner_menu"
+              name="Partners"
+              parent="certificate_root"
+              sequence="3"
+              action="certificate.certificate_partner_menu_action"/>
+</odoo>

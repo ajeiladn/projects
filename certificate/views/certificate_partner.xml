@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="certificate_partner_view_tree" model="ir.ui.view">
+        <field name="name">certificate.partner.view.tree</field>
+        <field name="model">certificate.partner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="phone"/>
+                <field name="course_id"/>
+                <field name="total_amt"/>
+                <field name="state"/>
+                <field name="balance_amt"/>
+            </tree>
+        </field>
+    </record>
+    <record id="certificate_partner_view_form" model="ir.ui.view">
+        <field name="name">certificate.partner.view.form</field>
+        <field name="model">certificate.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" string="CONFIRM" class="oe_highlight" states="draft"/>
+                    <button name="action_payment" type="object" string="CREATE INVOICE" class="oe_highlight"
+                            states="to_inv"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,to_inv,paid,completed"/>
+                    <button name="action_complete" type="object" string="Complete" states="paid" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" text="Completed" attrs="{'invisible':[('state','!=','completed')]}"/>
+                    <div name="button_box" position="inside">
+                        <button class="oe_stat_button" type="object" name="action_invoice_view" icon="fa-gittip"
+                                string="Invoice" states="invoiced"/>
+                    </div>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group name="payment_form_group">
+                        <field name="partner_id" widget="res_partner_many2one" context="{'show_address': 1}"
+                               options='{"always_reload": True}'/>
+                        <field name="phone"/>
+                        <field name="course_id"/>
+                        <field name="total_amt"/>
+                        <field name="balance_amt" force_save="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+        <record id="certificate_partner_search" model="ir.ui.view">
+        <field name="name">certificate.partner.search</field>
+        <field name="model">certificate.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="course_id"/>
+                <filter string="Draft" name="state" domain="[('state', '=', 'draft')]"/>
+                <filter string="To Invoice" name="state" domain="[('state', '=', 'to_inv')]"/>
+                <filter string="Invoiced" name="state" domain="[('state', '=', 'invoiced')]"/>
+                <filter string="Paid" name="state" domain="[('state', '=', 'paid')]"/>
+                <filter string="Completed" name="state" domain="[('state', '=', 'completed')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Partner Name" name="partner_id" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Course" name="course_id" context="{'group_by': 'course_id'}"/>
+                    <filter string="State" name="state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="certificate_partner_menu_action" model="ir.actions.act_window">
+        <field name="name">Partners</field>
+        <field name="res_model">certificate.partner</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
