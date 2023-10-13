@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sap_integration_view_tree" model="ir.ui.view">
+        <field name="name">sap.integration.view.tree</field>
+        <field name="model">sap.integration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="username"/>
+                <field name="protocol"/>
+                <field name="hostname"/>
+                <field name="port"/>
+                <field name="is_active"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="sap_integration_view_form" model="ir.ui.view">
+        <field name="name">sap.integration.view.forn</field>
+        <field name="model">sap.integration</field>
+        <field name="arch" type="xml">
+            <form name="sap_integration_form">
+                <header>
+                    <button name="connect_to_sap_api" string="Check Connection" type="object"
+                            class="btn-primary"/>
+                    <button name="action_sync_contacts" string="Sync Contacts"
+                            type="object" states="connected"/>
+                    <button name="action_sync_products" string="Sync Products"
+                            type="object" states="connected"/>
+                    <field name="state" widget="statusbar" statusbar_visible="not_connected,connected"/>
+                </header>
+                <sheet>
+                    <group name="sap_integration_fields">
+                        <group>
+                            <field name="hostname"/>
+                            <field name="port"/>
+                            <field name="username"/>
+                            <field name="password"/>
+                        </group>
+                        <group>
+                            <field name="protocol"/>
+                            <field name="is_active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_sap_integration_menu" model="ir.actions.act_window">
+        <field name="name">Sap Integration</field>
+        <field name="res_model">sap.integration</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="sap_integration_root" name="Sap Integration" parent="point_of_sale.menu_point_root"/>
+    <menuitem id="sap_integration_menu" name="Sap Integration" parent="sap_integration_root"
+              action="action_sap_integration_menu"/>
+</odoo>
